@@ -1,4 +1,4 @@
-import App from "react";
+import { useState } from "react";
 import "./style.css";
 
 const Form = ({ value, setValue }) => {
@@ -43,4 +43,4 @@ const Form = ({ value, setValue }) => {
     </form>
   );
 };
-export default App;
+export default Form;
