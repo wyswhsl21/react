@@ -4,11 +4,6 @@ import Header from "./header";
 import TodoList from "./todolist";
 
 const Home = () => {
-  const Background = styled.div`
-    background-color: black;
-    height: 100vh;
-  `;
-
   return (
     <div>
       <Background>
@@ -21,3 +16,8 @@ const Home = () => {
 };
 
 export default Home;
+
+const Background = styled.div`
+  background-color: black;
+  height: 100vh;
+`;

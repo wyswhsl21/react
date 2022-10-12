@@ -12,10 +12,10 @@ export const deleteTodo = (id) => {
     id,
   };
 };
-export const completeTodo = (id) => {
+export const completeTodo = (data) => {
   return {
     type: COMPLETE_TODO,
-    id,
+    data,
   };
 };
 export const valueForm = (payload) => {
@@ -36,6 +36,12 @@ export const detailTodo = (item) => {
     item,
   };
 };
+// export const relocatonTodo = (item) => {
+//   return {
+//     type: RELOCATION_TODO,
+//     item,
+//   };
+// };
 
 // 초기 상태값
 const initialState = [
@@ -66,20 +72,24 @@ const toDo = (state = initialState, action) => {
         },
       ];
     case COMPLETE_TODO:
+      // console.log(action);
+      console.log(action);
       const newState = state.map((item) => {
-        if (item.id === action.id) return { ...item, isDone: true };
+        if (item.id === action.data) return { ...item, isDone: true };
         return item;
       });
 
       return newState;
     case CANCEL_TODO:
       const cNewState = [...state];
+      console.log(cNewState);
       cNewState.map((item) => {
         if (item.id === action.id) return (item.isDone = false);
       });
       state = cNewState;
       return state;
     case DELETE_TODO:
+      console.log(state, action);
       const fState = state.filter((item) => item.id !== action.id);
       return fState;
 
@@ -87,7 +97,11 @@ const toDo = (state = initialState, action) => {
       console.log(state, action);
       const detail = state.filter((item) => item.id === action.item);
       console.log(detail);
-      return detail;
+      return [...state, detail];
+
+    // case RELOCATION_TODO:
+    //   const value = [...state];
+    //   return value;
 
     default:
       return state;

@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import styled, { createGlobalStyle } from "styled-components";
 import Detail from "./component/detail";
 import Home from "./component/Home";
 const App = () => {
