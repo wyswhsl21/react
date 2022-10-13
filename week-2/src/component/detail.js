@@ -1,19 +1,39 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { relocatonTodo } from "../redux/modules/toDo";
+import { fixTodo } from "../redux/modules/toDo";
 const Detail = () => {
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
+  const [fix, setFix] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
   console.log({ id });
   const detailList = useSelector((state) => state.toDo);
   console.log(detailList);
+
   // const onClickrelocation = (item) => {
   //   return dispatch(relocatonTodo(item));
   // };
   const [detail] = detailList.filter((item) => item.id === +id);
   console.log(detail);
   // useEffect(() => {}, []);
+  
+  const onFixTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+  console.log(title);
+  const onFixContentChange = (e) => {
+    setText(e.target.value);
+  };
+  console.log(text);
+  const onClickFixHandler = (value) => {
+    setFix((prev) => !prev);
+    dispatch(fixTodo(value));
+  };
+  const multiValue = { title, text, id };
+  console.log(multiValue);
 
   return (
     <Wrap>
@@ -25,15 +45,39 @@ const Detail = () => {
             </button>
           </Link>
         </Relocaion>
+        {fix === true ? (
+          <div>
+            <div>
+              <Span>
+                <input
+                  onChange={onFixTitleChange}
+                  type="text"
+                  value={title}
+                ></input>
+              </Span>
+            </div>
+            <div>
+              <Span>
+                <input
+                  onChange={onFixContentChange}
+                  type="text"
+                  value={text}
+                ></input>
+              </Span>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <Span>{detail.title}</Span>
+
+            <Span>{detail.text}</Span>
+          </div>
+        )}
+
         <div>
-          <Span margin>
-            <h2>{detail.title}</h2>
-          </Span>
-        </div>
-        <div>
-          <Span>
-            <h2>{detail.text}</h2>
-          </Span>
+          <button onClick={() => onClickFixHandler(multiValue)}>
+            수정하기
+          </button>
         </div>
       </ContentsBox>
     </Wrap>
@@ -70,8 +114,8 @@ const Wrap = styled.div`
   align-items: center;
 `;
 const ContentsBox = styled.div`
-  width: 300px;
-  height: 300px;
+  width: 500px;
+  height: 400px;
   border: none;
   border-radius: 10%;
   background-color: #f3f3f3;

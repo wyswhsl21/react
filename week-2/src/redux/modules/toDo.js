@@ -4,6 +4,7 @@ const COMPLETE_TODO = "COMPLETE_TODO";
 const VALUE_FORM = "VALUE_FORM";
 const CANCEL_TODO = "CANCEL_TODO";
 const DETAIL_TODO = "DETAIL_TODO";
+const FIX_TODO = "FIX_TODO";
 
 // action creator
 export const deleteTodo = (id) => {
@@ -34,6 +35,12 @@ export const detailTodo = (item) => {
   return {
     type: DETAIL_TODO,
     item,
+  };
+};
+export const fixTodo = (value) => {
+  return {
+    type: FIX_TODO,
+    value,
   };
 };
 // export const relocatonTodo = (item) => {
@@ -99,9 +106,20 @@ const toDo = (state = initialState, action) => {
       console.log(detail);
       return [...state, detail];
 
-    // case RELOCATION_TODO:
-    //   const value = [...state];
-    //   return value;
+    case FIX_TODO:
+      console.log(state, action);
+      const fix = state.map((item) => {
+        if (item.id === +action.value.id)
+          return {
+            ...item,
+            title: action.value.title,
+            text: action.value.text,
+          };
+        return item;
+          
+         
+      });
+      return fix;
 
     default:
       return state;
